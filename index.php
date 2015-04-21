@@ -62,6 +62,9 @@ window.addEventListener("resize", function() {
 
 $.getJSON("<?php echo $config["data"] ?>?callback=?", function(data) {
     console.dir( data.replies );
+    for( var i = 0; i < data.replies.length; i++ ) {
+        //var box = BABYLON.Mesh.CreateBox()
+    }
 });
 </script>
 </body>
