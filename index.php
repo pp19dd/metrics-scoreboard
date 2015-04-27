@@ -27,6 +27,28 @@ html, body {
 <body>
     <canvas id="renderCanvas"></canvas>
 <script>
+
+/*
+    a = data
+    s = sort by field
+    d = direction ("asc" / "desc")
+*/
+function pv_sort(a, s, d) {
+    if( typeof d == "undefined" ) d = "desc";
+    return( function(a,b) {
+        if( d == "asc" ) {
+            if( parseInt(a[s]) > b[s] ) return( 1 );
+            if( parseInt(a[s]) < b[s] ) return( -1 );
+        } else {
+            if( parseInt(a[s]) > b[s] ) return( -1 );
+            if( parseInt(a[s]) < b[s] ) return( 1 );
+        }
+
+        return( 0 );
+    });
+}
+
+
 var canvas = $("#renderCanvas")[0];
 var engine = new BABYLON.Engine( canvas, true );
 var createScene = function() {
@@ -61,10 +83,14 @@ window.addEventListener("resize", function() {
 });
 
 $.getJSON("<?php echo $config["data"] ?>?callback=?", function(data) {
-    console.dir( data.replies );
-    for( var i = 0; i < data.replies.length; i++ ) {
+    data.sort( pv_sort( data, "pageviews" ) );
+    // console.dir( x );
+    for( var i = 0; i < data.length; i++ )(function(p) {
+        // console.info( "i = " + i + ", c = " + data[i].comments, ", url = "  + data[i].url );
         //var box = BABYLON.Mesh.CreateBox()
-    }
+        //console.info( data[i] );
+        console.info( p );
+    })(data[i]);
 });
 </script>
 </body>
